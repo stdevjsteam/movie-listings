@@ -1,2 +1,13 @@
-<p>movie works!</p>
-id: {{ data.id }}
+<!-- Movie item - Start -->
+<div class="movie">
+
+	<img [src]="data.poster_image" alt="Movie Title">
+
+	<div class="rating">
+		<span>{{ data.vote_average }}</span>
+	</div>
+
+	<a href="#" class="title">{{ data.title }}</a>
+
+</div>
+<!-- Movie item - End -->

@@ -1,0 +1,98 @@
+// Headings
+h1 {
+	font-size: 46px;
+	font-weight: $fw-700;
+}
+
+// Font size
+@each $key,$val in $font_sizes {
+	.font-#{$key} {
+		font-size: #{$val} !important;
+	}
+}
+
+// Font weight
+@each $key,$val in $font_weights {
+	.fw-#{$key} {
+		font-weight: #{$val};
+	}
+}
+
+
+// Image
+img {
+	width: 100%;
+	height: auto;
+}
+
+
+// Text overflow
+.ellipsis {
+	@include ellipsis(100%);
+}
+
+.nowrap {
+	white-space: nowrap;
+}
+
+
+// Display
+.display-inline-block {
+	display: inline-block;
+}
+
+.display-block {
+	display: block;
+}
+
+.display-inline {
+	display: inline;
+}
+
+.flex {
+	display: flex;
+}
+
+.align-center {
+	align-items: center;
+}
+
+.align-end {
+	align-items: flex-end;
+}
+
+.justify-center {
+	justify-content: center;
+}
+
+.justify-between {
+	justify-content: space-between;
+}
+
+.justify-around {
+	justify-content: space-around;
+}
+
+.justify-start {
+	justify-content: flex-start;
+}
+
+.justify-end {
+	justify-content: flex-end;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
+.dir-col {
+	flex-direction: column;
+}
+
+.grow-1 {
+	flex-grow: 1;
+}
+
+.shrink-0 {
+	flex-shrink: 0;
+}

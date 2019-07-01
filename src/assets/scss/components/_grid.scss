@@ -1,0 +1,58 @@
+.row {
+	margin-left: -15px;
+	margin-right: -15px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+[class*="col-"] {
+	padding: 0 15px;
+}
+
+$cols: 12;
+$step: 1;
+
+@while $step <= $cols {
+    .col-#{$step} {
+    	width: calc(100% / (#{$cols} / #{$step}));
+    }
+    $step: $step + 1;
+}
+
+@media (max-width: $screen-lg) {
+
+	.col-lg-5 {
+		width: calc((100% / #{$cols}) * 5);
+	}
+}
+
+@media (max-width: $screen-md) {
+
+	.col-md-4 {
+		width: calc((100% / #{$cols}) * 4);
+	}
+
+	.col-md-6 {
+		width: calc((100% / #{$cols}) * 6);
+	}
+}
+
+
+@media (max-width: $screen-sm) {
+
+	.col-sm-6 {
+		width: calc((100% / #{$cols}) * 6);
+	}
+
+	.col-sm-12 {
+		width: 100%;
+	}
+}
+
+@media (max-width: $screen-xs) {
+
+	.col-xs-12 {
+		width: 100%;
+	}
+
+}

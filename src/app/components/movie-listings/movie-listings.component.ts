@@ -11,8 +11,7 @@ import { MoviesService } from 'src/app/services/movies.service';
 
 @Component({
   selector: 'app-movie-listings',
-  templateUrl: './movie-listings.component.html',
-  styleUrls: ['./movie-listings.component.scss']
+  templateUrl: './movie-listings.component.html'
 })
 export class MovieListingsComponent implements OnInit, OnDestroy {
 
