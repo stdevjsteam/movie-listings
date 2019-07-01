@@ -1,15 +1,2 @@
-<!-- Movies list - Start -->
-<div class="movie-listings">
-	
-	<div class="row">
-
-		<div class="col-3 col-md-4 col-sm-6 col-xs-12 mb-6 mb-xs-4" *ngFor="let movie of movies">
-
-			<app-movie [data]=movie></app-movie>
-
-		</div>
-	
-	</div>
-
-</div>
-<!-- Movies list - End -->
+<p>movie-listings works!</p>
+<app-movie *ngFor="let movie of movies" [data]=movie></app-movie>

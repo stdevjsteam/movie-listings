@@ -8,7 +8,6 @@ export interface IMovie {
   readonly overview: string;
   readonly popularity: number;
   readonly poster_path: string;
-  poster_image: string;
   readonly release_date: string;
   readonly title: string;
   readonly video: boolean;
