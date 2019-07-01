@@ -5,7 +5,6 @@ import { takeUntil } from 'rxjs/operators';
 
 // Models
 import { IMovie } from 'src/app/models/movie.model';
-import { IResultModel } from 'src/app/models/result.model';
 
 // Services
 import { MoviesService } from 'src/app/services/movies.service';

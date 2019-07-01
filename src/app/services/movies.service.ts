@@ -29,22 +29,18 @@ export class MoviesService extends BaseService<IMovie> {
     super(http);
   }
 
-  public getMovies(page: number, lang: string): Observable<IResultModel<IMovie>> {
-    return this.http.get<IResultModel<IMovie>>(`${this.apiUrl}movie/now_playing`, {
-      params: {
-        page: `${page}`,
-        api_key: this.apiKey,
-        language: lang
-      }
+  private getMovies(page: number, lang: string): Observable<IResultModel<IMovie>> {
+    return this.getAll('movie/now_playing', {
+      page: `${page}`,
+      api_key: this.apiKey,
+      language: lang
     });
   }
 
-  public getGenres(lang: string): Observable<IGenreResult> {
-    return this.http.get<IGenreResult>(`${this.apiUrl}genre/movie/list`, {
-      params: {
-        api_key: this.apiKey,
-        language: lang
-      }
+  private getGenres(lang: string): Observable<IGenreResult> {
+    return this.getAll<IGenreResult>('genre/movie/list', {
+      api_key: this.apiKey,
+      language: lang
     }).pipe(tap((genres: IGenreResult): void => {
       for (const genre of genres.genres) {
         this.genresMap.set(genre.id, genre.name);

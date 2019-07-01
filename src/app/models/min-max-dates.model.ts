@@ -1,4 +1,4 @@
 export interface IMinMaxModel {
-    readonly maximum: string;
-    readonly minimum: string;
+  readonly maximum: string;
+  readonly minimum: string;
 }

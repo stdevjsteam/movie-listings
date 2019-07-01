@@ -11,6 +11,7 @@ import { IMovie } from 'src/app/models/movie.model';
 })
 export class MovieComponent implements OnInit {
 
+  // Movie data
   @Input() data: IMovie;
 
   constructor() { }
