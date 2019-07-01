@@ -1,5 +1,5 @@
 // Packages
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 // Models
 import { IMovie } from 'src/app/models/movie.model';
@@ -9,7 +9,8 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-movie',
-  templateUrl: './movie.component.html'
+  templateUrl: './movie.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MovieComponent implements OnInit {
 

@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin, of } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, map } from 'rxjs/operators';
 
 // Services
 import { BaseService } from './base.service';
@@ -19,36 +19,45 @@ import { IGenreResult } from '../models/genres.model';
   providedIn: 'root'
 })
 export class MoviesService extends BaseService<IMovie> {
-  // TMDb api key
-  private readonly apiKey = environment.apiKey;
 
   // Map for store genres with their id's and names
   public genresMap = new Map<number, string>();
+
+  public moviesStore: IMovie[] = [];
 
   constructor(protected http: HttpClient) {
     super(http);
   }
 
-  private getMovies(page: number, lang: string): Observable<IResultModel<IMovie>> {
+  private getMovies(page: number, lang: string): Observable<IMovie[]> {
     return this.getAll('movie/now_playing', {
       page: `${page}`,
-      api_key: this.apiKey,
       language: lang
-    });
+    }).pipe(map((result: IResultModel<IMovie>) => {
+      if (this.genresMap.size) {
+        for (const movie of result.results) {
+          movie.genres = [];
+          movie.genre_ids.forEach(id => {
+            movie.genres.push(this.genresMap.get(id));
+          });
+        }
+        this.moviesStore = result.results;
+      }
+      return this.moviesStore;
+    }));
   }
 
   private getGenres(lang: string): Observable<IGenreResult> {
     return this.getAll<IGenreResult>('genre/movie/list', {
-      api_key: this.apiKey,
       language: lang
-    }).pipe(tap((genres: IGenreResult): void => {
-      for (const genre of genres.genres) {
+    }).pipe(tap((result: IGenreResult): void => {
+      for (const genre of result.genres) {
         this.genresMap.set(genre.id, genre.name);
       }
     }));
   }
 
-  public getMoviesAndGenres(page: number, lang: string): Observable<[IResultModel<IMovie>, IGenreResult]> {
-    return forkJoin(this.getMovies(page, lang), this.getGenres(lang)).pipe(catchError(error => of(error)));
+  public getMoviesAndGenres(page: number, lang: string): Observable<[IGenreResult, IMovie[]]> {
+    return forkJoin(this.getGenres(lang), this.getMovies(page, lang)).pipe(catchError(error => of(error)));
   }
 }
