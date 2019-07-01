@@ -1,6 +1,8 @@
+// Packages
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+// Components
 import { AppComponent } from './app.component';
 import { MovieListingsComponent } from './components/movie-listings/movie-listings.component';
 import { MovieComponent } from './components/movie-listings/movie/movie.component';

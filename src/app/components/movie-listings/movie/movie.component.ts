@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+// Packages
+import { Component, OnInit, Input } from '@angular/core';
+
+// Models
+import { IMovie } from 'src/app/models/movie.model';
 
 @Component({
   selector: 'app-movie',
@@ -6,6 +10,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./movie.component.scss']
 })
 export class MovieComponent implements OnInit {
+
+  @Input() data: IMovie;
 
   constructor() { }
 
