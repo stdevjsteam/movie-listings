@@ -13,4 +13,5 @@ export interface IMovie {
     readonly video: boolean;
     readonly vote_average: number;
     readonly vote_count: number;
+    genres?: string[];
 }
