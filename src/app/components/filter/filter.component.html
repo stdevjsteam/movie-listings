@@ -1,1 +1,35 @@
-<p>filter works!</p>
+<div class="filters mb-8">
+
+	<form>
+
+		<div class="row align-end">
+			
+			<!-- Genre select - Start -->
+			<div class="col-4 col-lg-5 col-md-6 col-sm-12 mb-sm-6">
+				<select name="genre" class="select">
+					<option>Select genre</option>
+					<option value="action">Action</option>
+					<option value="adventure">Adventure</option>
+					<option value="comedy">Comedy</option>
+				</select>
+			</div>
+			<!-- Genre select - End -->
+			
+			<!-- Rating range - Start -->
+			<div class="col-5 col-md-6 col-sm-12 ml-auto">
+				<div class="rating-filter">
+					<p>Minimum Rating <span>{{ minRate }}</span></p>
+					<div class="range-slider">
+						<span>0</span>
+						<input (change)="onRateFilter($event)" type="range" name="rating" min="0" max="10" step="0.5" [(ngModel)]="minRate">
+						<span>10</span>
+					</div>
+				</div>
+			</div>
+			<!-- Rating range - End -->
+
+		</div>
+		
+	</form>
+	
+</div>
