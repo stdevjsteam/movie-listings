@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'https://api.themoviedb.org/3/',
+  apiKey: '6990fecbb6813f036ea0fe05273711ec'
 };
 
 /*
@@ -14,3 +16,6 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+
+
+// movie/now_playing?page=1&language=en-US&api_key=%3C%3Capi_key%3E%3E
