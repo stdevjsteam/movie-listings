@@ -47,8 +47,8 @@ export class MoviesService extends BaseService<IMovie> {
     return this.getAll<IGenreResult>('genre/movie/list', {
       language: lang
     }).pipe(tap((result: IGenreResult): void => {
-      this.filterService.$genresSubject.next(result.genres);
-      this.filterService.$genresSubject.complete();
+      this.filterService.callNextOnSubject(result.genres);
+      this.filterService.callCompleteOnSubject();
       for (const genre of result.genres) {
         this.genresMap.set(genre.id, genre.name);
       }

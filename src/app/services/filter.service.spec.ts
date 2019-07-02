@@ -1,12 +1,30 @@
 import { TestBed } from '@angular/core/testing';
 
 import { FilterService } from './filter.service';
+import { IGenre } from '../models/genres.model';
 
 describe('FilterService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let service: FilterService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.get(FilterService);
+  });
 
   it('should be created', () => {
-    const service: FilterService = TestBed.get(FilterService);
     expect(service).toBeTruthy();
+  });
+
+  it('should emit data to genresSubject$ Subject', () => {
+    service.callNextOnSubject([{id: 1, name: 'Action'}]);
+    service.genresSubject$.subscribe((genres: IGenre[]) => {
+      expect(genres).toEqual([{id: 1, name: 'Action'}]);
+    });
+  });
+
+  it('should complete genresSubject$ Subject', () => {
+    const spy = spyOn(service.genresSubject$, 'complete');
+    service.callCompleteOnSubject();
+    expect(spy).toHaveBeenCalled();
   });
 });

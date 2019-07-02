@@ -73,7 +73,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   private getGenres(): void {
-    this.filterService.$genresSubject
+    this.filterService.genresSubject$
     .pipe(takeUntil(this.$unsubscribe))
     .subscribe(
       (result: IGenre[]): void => {

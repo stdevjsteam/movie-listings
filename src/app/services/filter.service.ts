@@ -10,6 +10,14 @@ import { IGenre } from '../models/genres.model';
 })
 export class FilterService {
 
-  public $genresSubject = new Subject<IGenre[]>();
+  public genresSubject$ = new Subject<IGenre[]>();
+
+  public callNextOnSubject(genres: IGenre[]): void {
+    this.genresSubject$.next(genres);
+  }
+
+  public callCompleteOnSubject(): void {
+    this.genresSubject$.complete();
+  }
 
 }
