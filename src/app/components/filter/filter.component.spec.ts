@@ -17,7 +17,7 @@ describe('FilterComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({genre: 12, minRate: 4})
+            queryParams: of({genre: 12, minRate: 4})
           }
         }
       ]
