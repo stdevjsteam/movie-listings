@@ -4,13 +4,14 @@
 	<img [src]="data.poster_image" alt="Movie Title">
 
 	<div class="rating">
+		<i class="icon-star-rate"></i>
 		<span>{{ data.vote_average }}</span>
 	</div>
 
 	<div class="caption">
 		<a href="#" class="title">{{ data.title }}</a>
 		<p class="genre">
-			<ng-container *ngFor="let genre of data.genres, index as i">{{ i !== 0 ? ', ': '' }}{{ genre }}</ng-container>
+			{{ data.genres | list }}
 		</p>
 	</div>
 

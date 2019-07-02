@@ -46,26 +46,23 @@
 		@include position($top: 0, $left: 0);
 		background: rgb(#000, .5);
 		border-radius: $br;
-		padding: 8px 5px 5px 2px;
-		width: 50px;
+		padding: 8px 10px 6px;
+		// width: 50px;
 		height: 40px;
-		text-align: center;
+		display: flex;
+		align-items: center;
+		
+		i {
+			font-size: $font-size-sm;
+			color: $color-rating;
+			margin-right: 5px;
+		}
 
 		span {
 			color: #fff;
 			font-weight: $fw-500;
 			display: inline-block;
-			line-height: 27px;
-			position: relative;
-
-			&:after {
-				content: $icon-star-rate;
-				font-family: $font-icomoon;
-				font-size: 8px;
-				line-height: 8px;
-				color: $color-rating;
-				@include position($top: 0px, $right: -7px);
-			}
+			line-height: 25px;
 		}
 	}
 

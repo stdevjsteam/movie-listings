@@ -1,10 +1,15 @@
 // Packages
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 // Models
 import { IFilter } from 'src/app/models/filter.model';
+import { IGenre } from 'src/app/models/genres.model';
+
+// Services
+import { FilterService } from 'src/app/services/filter.service';
 
 @Component({
   selector: 'app-filter',
@@ -12,44 +17,67 @@ import { IFilter } from 'src/app/models/filter.model';
 })
 export class FilterComponent implements OnInit, OnDestroy {
 
+  // Min rate
   public minRate = 3;
-  public genre: number = null;
-  private subscription: Subscription;
+
+  // Current genre
+  public currentGenre: number = null;
+
+  public genresList: IGenre[] = [];
+
+  // Subject for unsubscribe subscriptions
+  private $unsubscribe = new Subject<void>();
 
   constructor(
     private readonly router: Router,
-    private readonly activatedRoute: ActivatedRoute
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly filterService: FilterService
   ) { }
 
   ngOnInit(): void {
+    // Get filter config from router query params
     this.getConfigFromRoute();
+
+    this.getGenres();
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    // Unsubscribe subscriptions
+    this.$unsubscribe.next();
+    this.$unsubscribe.complete();
   }
 
   public onFilter(): void {
     this.router.navigate([''], {
       relativeTo: this.activatedRoute,
       queryParams: {
-        genre: this.genre,
+        genre: this.currentGenre,
         minRate: this.minRate
       }
     });
   }
 
   private getConfigFromRoute(): void {
-    this.subscription = this.activatedRoute.queryParams.subscribe(
+    this.activatedRoute.queryParams
+    .pipe(takeUntil(this.$unsubscribe))
+    .subscribe(
       (filterConfig: IFilter): void => {
         if (filterConfig.genre) {
-          this.genre = filterConfig.genre;
+          this.currentGenre = filterConfig.genre;
         }
         if (filterConfig.minRate) {
           this.minRate = filterConfig.minRate;
         }
+      }
+    );
+  }
+
+  private getGenres(): void {
+    this.filterService.$genresSubject
+    .pipe(takeUntil(this.$unsubscribe))
+    .subscribe(
+      (result: IGenre[]): void => {
+        this.genresList = result;
       }
     );
   }

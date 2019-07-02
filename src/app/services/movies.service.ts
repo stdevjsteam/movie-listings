@@ -6,6 +6,7 @@ import { tap, catchError, map } from 'rxjs/operators';
 
 // Services
 import { BaseService } from './base.service';
+import { FilterService } from './filter.service';
 
 // Models
 import { IMovie } from '../models/movie.model';
@@ -23,7 +24,10 @@ export class MoviesService extends BaseService<IMovie> {
 
   public moviesStore: IMovie[] = [];
 
-  constructor(protected http: HttpClient) {
+  constructor(
+    protected readonly http: HttpClient,
+    private readonly filterService: FilterService
+  ) {
     super(http);
   }
 
@@ -49,6 +53,8 @@ export class MoviesService extends BaseService<IMovie> {
     return this.getAll<IGenreResult>('genre/movie/list', {
       language: lang
     }).pipe(tap((result: IGenreResult): void => {
+      this.filterService.$genresSubject.next(result.genres);
+      this.filterService.$genresSubject.complete();
       for (const genre of result.genres) {
         this.genresMap.set(genre.id, genre.name);
       }
@@ -60,7 +66,11 @@ export class MoviesService extends BaseService<IMovie> {
   }
 
   public filterMovies(filterConfig: IFilter): IMovie[] {
-    return this.moviesStore.filter((movie: IMovie) => {
+    // this.moviesStore.filter((movie: IMovie) => {
+    //   console.log(movie.genre_ids.includes(filterConfig.genre));
+    //   return true;
+    // });
+    return this.moviesStore.filter((movie: IMovie): boolean => {
       return (filterConfig.minRate ? movie.vote_average >= filterConfig.minRate : true) &&
       (filterConfig.genre ? movie.genre_ids.includes(filterConfig.genre) : true);
     });

@@ -11,13 +11,15 @@ import { AppComponent } from './app.component';
 import { MovieListingsComponent } from './components/movie-listings/movie-listings.component';
 import { MovieComponent } from './components/movie-listings/movie/movie.component';
 import { FilterComponent } from './components/filter/filter.component';
+import { ListPipe } from './pipes/list.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     MovieListingsComponent,
     MovieComponent,
-    FilterComponent
+    FilterComponent,
+    ListPipe
   ],
   imports: [
     BrowserModule,
