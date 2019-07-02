@@ -1,6 +1,8 @@
 # MovieListings
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.6.
+As an API, we have used `https://developers.themoviedb.org/3/`. The filtering and sorting is being done in the client side as requested in the task.
+We have used CSS grid. The page is fully responsive.
 
 ## Development server
 
@@ -17,6 +19,8 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+We have written 19 unit tests for components, services, and pipes.
 
 ## Running end-to-end tests
 
