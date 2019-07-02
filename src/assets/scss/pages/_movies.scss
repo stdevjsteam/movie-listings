@@ -26,15 +26,20 @@
 	}
 }
 
-// Single movie
+// Movie item
 .movie {
 	position: relative;
 	border-radius: $br;
 	overflow: hidden;
 	transition: $trns-duration;
+	box-shadow: 0 2px 10px 0 rgba(#000, .2);
 
 	&:hover {
-		box-shadow: 0 5px 20px 0 rgba(#000, .4);
+		box-shadow: 0 4px 20px 0 rgba(#000, .4);
+
+		.caption {
+			padding: 25px 10px;
+		}
 	}
 
 	.rating {
@@ -62,19 +67,29 @@
 				@include position($top: 0px, $right: -7px);
 			}
 		}
-	}	
+	}
 
-	.title {
+	.caption {
 		@include position($bottom: 0, $left: 0);
 		width: 100%;
-		color: rgba(#fff, .6);
+		padding: 15px;
+		background: rgb(#000, .7);
+		transition: $trns-duration;
+	}
+
+	.title {
+		color: #fff;
 		display: inline-block;
-		padding: 15px 10px;
 		font-weight: $fw-500;
-		background: rgb(#000, .5);
 
 		&:hover {
-			color: #fff;
+			color: rgba(#fff, .8);
 		}
+	}
+
+	.genre {
+		color: rgba(#fff, .7);
+		font-size: 12px;
+		margin-top: 5px;
 	}
 }

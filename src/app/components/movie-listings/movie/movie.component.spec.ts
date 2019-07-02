@@ -30,9 +30,9 @@ describe('MovieComponent', () => {
       original_title: 'Toy Story 4',
       overview: 'Description',
       popularity: 359.221,
-      poster_path: "/w9kR8qbmQ01HwnvK4alvnQ2ca0L.jpg",
-      release_date: "2019-06-19",
-      title: "Toy Story 4",
+      poster_path: '/w9kR8qbmQ01HwnvK4alvnQ2ca0L.jpg',
+      release_date: '2019-06-19',
+      title: 'Toy Story 4',
       video: false,
       vote_average: 7.7,
       vote_count: 695
@@ -65,6 +65,7 @@ describe('MovieComponent', () => {
   });
 
   it('get image file path', () => {
-    expect(component['getImagePath'].call(component, component.data.poster_path)).toEqual(`${environment.imageBaseUrl}${component['imageSize']}/${component.data.poster_path}`);
+    expect(component['getImagePath'].call(component, component.data.poster_path))
+    .toEqual(`${environment.imageBaseUrl}${component['imageSize']}/${component.data.poster_path}`);
   });
 });

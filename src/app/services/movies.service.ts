@@ -7,9 +7,6 @@ import { tap, catchError, map } from 'rxjs/operators';
 // Services
 import { BaseService } from './base.service';
 
-// Enviroment
-import { environment } from 'src/environments/environment';
-
 // Models
 import { IMovie } from '../models/movie.model';
 import { IResultModel } from '../models/result.model';

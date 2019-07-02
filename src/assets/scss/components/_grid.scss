@@ -19,40 +19,21 @@ $step: 1;
     $step: $step + 1;
 }
 
-@media (max-width: $screen-lg) {
 
-	.col-lg-5 {
-		width: calc((100% / #{$cols}) * 5);
-	}
-}
+@each $key-breakpoints, $val-breakpoints in $breakpoints {
 
-@media (max-width: $screen-md) {
+	@media (max-width: #{$val-breakpoints}) {
 
-	.col-md-4 {
-		width: calc((100% / #{$cols}) * 4);
-	}
+		$cols: 12;
+		$step: 1;
 
-	.col-md-6 {
-		width: calc((100% / #{$cols}) * 6);
-	}
-}
+		@while $step <= $cols {
+		    .col-#{$key-breakpoints}-#{$step} {
+		    	width: calc(100% / (#{$cols} / #{$step}));
+		    }
+		    $step: $step + 1;
+		}
 
-
-@media (max-width: $screen-sm) {
-
-	.col-sm-6 {
-		width: calc((100% / #{$cols}) * 6);
-	}
-
-	.col-sm-12 {
-		width: 100%;
-	}
-}
-
-@media (max-width: $screen-xs) {
-
-	.col-xs-12 {
-		width: 100%;
 	}
 
 }
