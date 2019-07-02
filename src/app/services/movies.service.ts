@@ -32,6 +32,13 @@ export class MoviesService extends BaseService<IMovie> {
     super(http);
   }
 
+  /**
+   * @description Gets movies from TMDb
+   * @param {number} page
+   * @param {string} lang
+   * @returns {Observable<IMovie[]>}
+   * @memberof MoviesService
+   */
   public getMovies(page: number, lang: string): Observable<IMovie[]> {
     return this.getAll('movie/now_playing', {
       page: `${page}`,
@@ -41,6 +48,12 @@ export class MoviesService extends BaseService<IMovie> {
     }));
   }
 
+  /**
+   * @description Gets genres from TMDb
+   * @param {string} lang
+   * @returns {Observable<IGenreResult>}
+   * @memberof MoviesService
+   */
   public getGenres(lang: string): Observable<IGenreResult> {
     return this.getAll<IGenreResult>('genre/movie/list', {
       language: lang
@@ -56,10 +69,23 @@ export class MoviesService extends BaseService<IMovie> {
     }));
   }
 
+  /**
+   * @description Join 'getGenres' and 'getMovies' Observables
+   * @param {number} page
+   * @param {string} lang
+   * @returns {Observable<[IGenreResult, IMovie[]]>}
+   * @memberof MoviesService
+   */
   public getMoviesAndGenres(page: number, lang: string): Observable<[IGenreResult, IMovie[]]> {
     return forkJoin(this.getGenres(lang), this.getMovies(page, lang)).pipe(catchError(error => of(error)));
   }
 
+  /**
+   * @description Filter Movies and order by popularity
+   * @param {IFilter} filterConfig
+   * @returns {IMovie[]}
+   * @memberof MoviesService
+   */
   public filterAndSortMovies(filterConfig: IFilter): IMovie[] {
     return this.moviesStore.filter((movie: IMovie): boolean => {
       return (filterConfig.minRate ? movie.vote_average >= filterConfig.minRate : true) &&
@@ -67,6 +93,13 @@ export class MoviesService extends BaseService<IMovie> {
     }).sort((a: IMovie, b: IMovie) => b.popularity - a.popularity);
   }
 
+  /**
+   * @description Sets movie's genres
+   * @private
+   * @param {IMovie[]} movies
+   * @returns {IMovie[]}
+   * @memberof MoviesService
+   */
   private setMoviesGenres(movies: IMovie[]): IMovie[] {
     return movies.map((movie: IMovie): IMovie => {
       movie.genres = [];

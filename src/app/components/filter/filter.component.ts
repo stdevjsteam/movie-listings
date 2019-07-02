@@ -38,6 +38,7 @@ export class FilterComponent implements OnInit, OnDestroy {
     // Get filter config from router query params
     this.getConfigFromRoute();
 
+    // Get genres
     this.getGenres();
   }
 
@@ -47,7 +48,12 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.$unsubscribe.complete();
   }
 
+  /**
+   * @description Pushes router query params on filter
+   * @memberof FilterComponent
+   */
   public onFilter(): void {
+    // Push filter config to router in order to save it for refresh etc.
     this.router.navigate([''], {
       relativeTo: this.activatedRoute,
       queryParams: {
@@ -57,6 +63,11 @@ export class FilterComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * @description Gets filter config from router
+   * @private
+   * @memberof FilterComponent
+   */
   private getConfigFromRoute(): void {
     this.activatedRoute.queryParams
     .pipe(takeUntil(this.$unsubscribe))
@@ -72,6 +83,11 @@ export class FilterComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Gets genres from filter service
+   * @private
+   * @memberof FilterComponent
+   */
   private getGenres(): void {
     this.filterService.genresSubject$
     .pipe(takeUntil(this.$unsubscribe))

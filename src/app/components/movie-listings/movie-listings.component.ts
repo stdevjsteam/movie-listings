@@ -35,7 +35,10 @@ export class MovieListingsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    // Get movies
     this.getMovies(this.page, this.language);
+
+    // Get filter config from router query params
     this.getFilterConfigFromQueryParams();
   }
 
@@ -63,6 +66,11 @@ export class MovieListingsComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * @description Gets filter config from router query params
+   * @private
+   * @memberof MovieListingsComponent
+   */
   private getFilterConfigFromQueryParams(): void {
     this.activatedRoute.queryParams
     .pipe(takeUntil(this.$unsubscribe))
