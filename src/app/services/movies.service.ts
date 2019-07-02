@@ -66,13 +66,9 @@ export class MoviesService extends BaseService<IMovie> {
   }
 
   public filterMovies(filterConfig: IFilter): IMovie[] {
-    // this.moviesStore.filter((movie: IMovie) => {
-    //   console.log(movie.genre_ids.includes(filterConfig.genre));
-    //   return true;
-    // });
     return this.moviesStore.filter((movie: IMovie): boolean => {
       return (filterConfig.minRate ? movie.vote_average >= filterConfig.minRate : true) &&
-      (filterConfig.genre ? movie.genre_ids.includes(filterConfig.genre) : true);
+      (filterConfig.genre ? movie.genre_ids.includes(+filterConfig.genre) : true);
     });
   }
 }

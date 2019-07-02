@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { FilterComponent } from './filter.component';
 
@@ -9,7 +10,7 @@ describe('FilterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
+      imports: [ FormsModule, RouterModule.forRoot([]) ],
       declarations: [ FilterComponent ]
     })
     .compileComponents();

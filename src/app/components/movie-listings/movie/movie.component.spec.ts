@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MovieComponent } from './movie.component';
 import { IMovie } from 'src/app/models/movie.model';
 import { environment } from 'src/environments/environment';
+import { ListPipe } from 'src/app/pipes/list.pipe';
 
 describe('MovieComponent', () => {
   let component: MovieComponent;
@@ -11,7 +12,7 @@ describe('MovieComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MovieComponent ]
+      declarations: [ MovieComponent, ListPipe ]
     })
     .compileComponents();
   }));
@@ -64,13 +65,13 @@ describe('MovieComponent', () => {
     expect(titleElement.textContent).toEqual(data.title);
   });
 
-  it('get image file path', () => {
+  it('should get image file path', () => {
     expect(component['getImagePath'].call(component, component.data.poster_path))
     .toEqual(`${environment.imageBaseUrl}${component['imageSize']}/${component.data.poster_path}`);
   });
 
-  it('Display movie genres', () => {
+  it('should display movie genres', () => {
     const genreParagraph: HTMLParagraphElement = fixture.nativeElement.querySelector('.genre');
-    expect(genreParagraph.textContent).toEqual(data.genres.join(', '));
+    expect(genreParagraph.textContent).toBe(data.genres.join(', '));
   });
 });
