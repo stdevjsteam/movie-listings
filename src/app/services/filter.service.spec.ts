@@ -15,11 +15,12 @@ describe('FilterService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should emit data to genresSubject$ Subject', () => {
-    service.callNextOnSubject([{id: 1, name: 'Action'}]);
+  it('should emit data to genresSubject$ Subject', (done: DoneFn) => {
     service.genresSubject$.subscribe((genres: IGenre[]) => {
       expect(genres).toEqual([{id: 1, name: 'Action'}]);
+      done();
     });
+    service.callNextOnSubject([{id: 1, name: 'Action'}]);
   });
 
   it('should complete genresSubject$ Subject', () => {

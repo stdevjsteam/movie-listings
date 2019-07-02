@@ -6,7 +6,7 @@
 	line-height: 40px;
 	border: 1px solid $border-gray;
 	padding: 0 30px 0 15px;
-	@include bg-img($image: 'arrow-down.png', $repeat: no-repeat, $size: 26px, $position: right center);
+	@include bg-img($image: 'arrow-down.png', $color: #fff,  $repeat: no-repeat, $size: 26px, $position: right center);
 	border-radius: $br-sm;
 	@include ellipsis(100%);
 }

@@ -22,6 +22,7 @@ export class MoviesService extends BaseService<IMovie> {
   // Map for store genres with their id's and names
   public genresMap = new Map<number, string>();
 
+  // store movies
   public moviesStore: IMovie[] = [];
 
   constructor(
@@ -31,19 +32,16 @@ export class MoviesService extends BaseService<IMovie> {
     super(http);
   }
 
-  private getMovies(page: number, lang: string): Observable<IMovie[]> {
+  public getMovies(page: number, lang: string): Observable<IMovie[]> {
     return this.getAll('movie/now_playing', {
       page: `${page}`,
       language: lang
     }).pipe(map((result: IResultModel<IMovie>) => {
-      if (this.genresMap.size) {
-        this.moviesStore = this.setMoviesGenres(result.results);
-      }
-      return this.moviesStore;
+      return this.moviesStore = this.genresMap.size ? this.setMoviesGenres(result.results) : result.results;
     }));
   }
 
-  private getGenres(lang: string): Observable<IGenreResult> {
+  public getGenres(lang: string): Observable<IGenreResult> {
     return this.getAll<IGenreResult>('genre/movie/list', {
       language: lang
     }).pipe(tap((result: IGenreResult): void => {

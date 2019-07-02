@@ -36,6 +36,15 @@ img {
 }
 
 
+// Placeholder text
+.placeholder-text {
+	font-style: italic;
+	font-size: $font-size-md;
+	color: $color-text-70;
+	margin: 60px 0;
+}
+
+
 // Display
 .display-inline-block {
 	display: inline-block;

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 import { FilterComponent } from './filter.component';
 
@@ -11,7 +12,15 @@ describe('FilterComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ FormsModule, RouterModule.forRoot([]) ],
-      declarations: [ FilterComponent ]
+      declarations: [ FilterComponent ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({genre: 12, minRate: 4})
+          }
+        }
+      ]
     })
     .compileComponents();
   }));
