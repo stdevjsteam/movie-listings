@@ -1,5 +1,6 @@
 // Packages
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -8,7 +9,6 @@ import { IMovie } from 'src/app/models/movie.model';
 
 // Services
 import { MoviesService } from 'src/app/services/movies.service';
-import { FilterService } from 'src/app/services/filter.service';
 import { IFilter } from 'src/app/models/filter.model';
 
 @Component({
@@ -31,19 +31,12 @@ export class MovieListingsComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly moviesService: MoviesService,
-    private readonly filterService: FilterService
+    private readonly activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.getMovies(this.page, this.language);
-
-    this.filterService.$filterSubject
-    .pipe(takeUntil(this.$unsubscribe))
-    .subscribe(
-      (filterConfig: IFilter) => {
-        this.movies = this.filterMovies(filterConfig);
-      }
-    );
+    this.getFilterConfigFromQueryParams();
   }
 
   ngOnDestroy(): void {
@@ -64,16 +57,19 @@ export class MovieListingsComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.$unsubscribe))
     .subscribe(
       ([genres, movies]): void => {
-        this.movies = movies;
+        this.movies = this.moviesService.filterMovies(this.activatedRoute.snapshot.queryParams as IFilter);
       }
     );
   }
 
-  private filterMovies(filterConfig: IFilter): IMovie[] {
-    return this.moviesService.moviesStore.filter((movie: IMovie) => {
-      return movie.vote_average >= filterConfig.minRate && 
-      (filterConfig.genre ? movie.genre_ids.includes(filterConfig.genre) : true);
-    });
+  private getFilterConfigFromQueryParams(): void {
+    this.activatedRoute.queryParams
+    .pipe(takeUntil(this.$unsubscribe))
+    .subscribe(
+      (filterConfig: IFilter): void => {
+        this.movies = this.moviesService.filterMovies(filterConfig);
+      }
+    );
   }
 
 }

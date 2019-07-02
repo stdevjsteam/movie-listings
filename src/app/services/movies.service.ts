@@ -11,6 +11,7 @@ import { BaseService } from './base.service';
 import { IMovie } from '../models/movie.model';
 import { IResultModel } from '../models/result.model';
 import { IGenreResult } from '../models/genres.model';
+import { IFilter } from '../models/filter.model';
 
 @Injectable({
   providedIn: 'root'
@@ -56,5 +57,12 @@ export class MoviesService extends BaseService<IMovie> {
 
   public getMoviesAndGenres(page: number, lang: string): Observable<[IGenreResult, IMovie[]]> {
     return forkJoin(this.getGenres(lang), this.getMovies(page, lang)).pipe(catchError(error => of(error)));
+  }
+
+  public filterMovies(filterConfig: IFilter): IMovie[] {
+    return this.moviesStore.filter((movie: IMovie) => {
+      return (filterConfig.minRate ? movie.vote_average >= filterConfig.minRate : true) &&
+      (filterConfig.genre ? movie.genre_ids.includes(filterConfig.genre) : true);
+    });
   }
 }
