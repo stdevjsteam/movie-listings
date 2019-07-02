@@ -6,10 +6,10 @@ import { takeUntil } from 'rxjs/operators';
 
 // Models
 import { IMovie } from 'src/app/models/movie.model';
+import { IFilter } from 'src/app/models/filter.model';
 
 // Services
 import { MoviesService } from 'src/app/services/movies.service';
-import { IFilter } from 'src/app/models/filter.model';
 
 @Component({
   selector: 'app-movie-listings',

@@ -9,7 +9,9 @@
 
 	<div class="caption">
 		<a href="#" class="title">{{ data.title }}</a>
-		<p class="genre">{{ data.genres }}</p>
+		<p class="genre">
+			<ng-container *ngFor="let genre of data.genres, index as i">{{ i !== 0 ? ', ': '' }}{{ genre }}</ng-container>
+		</p>
 	</div>
 
 </div>

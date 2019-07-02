@@ -68,4 +68,9 @@ describe('MovieComponent', () => {
     expect(component['getImagePath'].call(component, component.data.poster_path))
     .toEqual(`${environment.imageBaseUrl}${component['imageSize']}/${component.data.poster_path}`);
   });
+
+  it('Display movie genres', () => {
+    const genreParagraph: HTMLParagraphElement = fixture.nativeElement.querySelector('.genre');
+    expect(genreParagraph.textContent).toEqual(data.genres.join(', '));
+  });
 });

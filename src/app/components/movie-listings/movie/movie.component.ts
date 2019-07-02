@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 export class MovieComponent implements OnInit {
 
   // image size
-  private imageSize = 'w500';
+  private imageSize = 'w300';
 
   // Movie data
   @Input() data: IMovie;
