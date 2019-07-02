@@ -57,7 +57,8 @@ export class MovieListingsComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.$unsubscribe))
     .subscribe(
       ([genres, movies]): void => {
-        this.movies = this.moviesService.filterMovies(this.activatedRoute.snapshot.queryParams as IFilter);
+        this.movies = this.moviesService
+        .filterAndSortMovies(this.activatedRoute.snapshot.queryParams as IFilter);
       }
     );
   }
@@ -67,7 +68,7 @@ export class MovieListingsComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.$unsubscribe))
     .subscribe(
       (filterConfig: IFilter): void => {
-        this.movies = this.moviesService.filterMovies(filterConfig);
+        this.movies = this.moviesService.filterAndSortMovies(filterConfig);
       }
     );
   }

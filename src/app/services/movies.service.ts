@@ -37,13 +37,7 @@ export class MoviesService extends BaseService<IMovie> {
       language: lang
     }).pipe(map((result: IResultModel<IMovie>) => {
       if (this.genresMap.size) {
-        for (const movie of result.results) {
-          movie.genres = [];
-          movie.genre_ids.forEach(id => {
-            movie.genres.push(this.genresMap.get(id));
-          });
-        }
-        this.moviesStore = result.results;
+        this.moviesStore = this.setMoviesGenres(result.results);
       }
       return this.moviesStore;
     }));
@@ -58,6 +52,9 @@ export class MoviesService extends BaseService<IMovie> {
       for (const genre of result.genres) {
         this.genresMap.set(genre.id, genre.name);
       }
+      if (this.moviesStore.length) {
+        this.setMoviesGenres(this.moviesStore);
+      }
     }));
   }
 
@@ -65,10 +62,20 @@ export class MoviesService extends BaseService<IMovie> {
     return forkJoin(this.getGenres(lang), this.getMovies(page, lang)).pipe(catchError(error => of(error)));
   }
 
-  public filterMovies(filterConfig: IFilter): IMovie[] {
+  public filterAndSortMovies(filterConfig: IFilter): IMovie[] {
     return this.moviesStore.filter((movie: IMovie): boolean => {
       return (filterConfig.minRate ? movie.vote_average >= filterConfig.minRate : true) &&
       (filterConfig.genre ? movie.genre_ids.includes(+filterConfig.genre) : true);
+    }).sort((a: IMovie, b: IMovie) => b.popularity - a.popularity);
+  }
+
+  private setMoviesGenres(movies: IMovie[]): IMovie[] {
+    return movies.map((movie: IMovie): IMovie => {
+      movie.genres = [];
+      movie.genre_ids.forEach(id => {
+        movie.genres.push(this.genresMap.get(id));
+      });
+      return movie;
     });
   }
 }
